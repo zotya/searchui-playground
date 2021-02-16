@@ -1,0 +1,10 @@
+sui-demo:
+#  image: node:8.15.1
+  build: .
+  volumes:
+    - ./demo:/searchui:z
+  command: bash -c "tail -f /dev/null"
+  environment:
+    - ELASTICSEARCH_HOST=http://192.168.0.187:19200
+  ports:
+    - 3000:3000
