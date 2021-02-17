@@ -8,7 +8,7 @@ function getTermFilterValue(field, fieldValue) {
     return { [field]: fieldValue === "true" };
   }
 
-  return { [`${field}.keyword`]: fieldValue };
+  return { [`${field}`]: fieldValue };
 }
 
 function getTermFilter(filter) {
@@ -67,11 +67,8 @@ export default function buildRequestFilter(filters) {
   if (!filters) return;
 
   filters = filters.reduce((acc, filter) => {
-    if (["states", "world_heritage_site"].includes(filter.field)) {
+    if (["Country", "GHG_s__affected"].includes(filter.field)) {
       return [...acc, getTermFilter(filter)];
-    }
-    if (["acres", "visitors"].includes(filter.field)) {
-      return [...acc, getRangeFilter(filter)];
     }
     return acc;
   }, []);

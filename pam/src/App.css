@@ -1,6 +1,3 @@
-.App {
-  text-align: center;
-}
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -30,4 +27,16 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.sui-layout-body__inner {
+  max-width: 100%;
+}
+
+.sui-layout-sidebar {
+  width:15%
+}
+
+.sui-layout-main-body {
+  overflow: auto;
 }

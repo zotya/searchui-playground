@@ -7,7 +7,7 @@ function buildFrom(current, resultsPerPage) {
 
 function buildSort(sortDirection, sortField) {
   if (sortDirection && sortField) {
-    return [{ [`${sortField}.keyword`]: sortDirection }];
+    return [{ [`${sortField}`]: sortDirection }];
   }
 }
 
@@ -16,7 +16,7 @@ function buildMatch(searchTerm) {
     ? {
         multi_match: {
           query: searchTerm,
-          fields: ["title", "description"]
+          fields: ["Country"]
         }
       }
     : { match_all: {} };
@@ -64,42 +64,86 @@ export default function buildRequest(state) {
       fragment_size: 200,
       number_of_fragments: 1,
       fields: {
-        title: {},
-        description: {}
+        Country: {}
       }
     },
     //https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-source-filtering.html#search-request-source-filtering
-    _source: ["id", "nps_link", "title", "description"],
+    _source: [
+      "Country",
+      "ID_of_policy_or_measure",
+      "Report_ID_ES",
+      "Name_of_policy_or_measure",
+      "Single_policy_or_measure__or_group_of_measures",
+      "Policies_or_measures_included_in_the_group",
+      "Type_of_policy_instrument",
+      "Status_of_implementation",
+      "Policy_impacting_EU_ETS__ESD_or_LULUCF_emissions",
+      "Sector_s__affected",
+      "Objective_s_",
+      "Total_GHG_emissions_reductions_in_2020__kt_CO2eq_y_",
+      "Total_GHG_emissions_reductions_in_2030__kt_CO2eq_y_",
+      "Entities_responsible_for_implementing_the_policy",
+      "Implementation_period_start",
+      "Is_the_policy_or_measure_related_to_a_Union_policy_",
+      "Related_Union_Policy",
+      "GHG_s__affected",
+      "Projection_scenario_in_which_the_policy_or_measure_is_included",
+      "Description",
+      "Quantified_objective",
+      "Implementation_period_finish",
+      "Indicator_used_to_monitor_and_evaluate_progress_over_time",
+      "General_comment",
+      "Main_reference",
+      "URL_to_main_reference",
+      "GHG_emissions_reductions_EU_ETS_in_2020__kt_CO2eq_y_",
+      "GHG_emissions_reductions_ESD_in_2020__kt_CO2eq_y_",
+      "GHG_emissions_reductions_EU_ETS_in_2025__kt_CO2eq_y_",
+      "GHG_emissions_reductions_ESD_in_2025__kt_CO2eq_y_",
+      "Total_GHG_emissions_reductions_in_2025__kt_CO2eq_y_",
+      "GHG_emissions_reductions_EU_ETS_in_2030__kt_CO2eq_y_",
+      "GHG_emissions_reductions_ESD_in_2030__kt_CO2eq_y_",
+      "GHG_emissions_reductions_EU_ETS_in_2035__kt_CO2eq_y_",
+      "GHG_emissions_reductions_ESD_in_2035__kt_CO2eq_y_",
+      "Total_GHG_emissions_reductions_in_2035__kt_CO2eq_y_",
+      "Reference_for_ex_ante_assessment",
+      "Web_link_for_ex_ante_assessment",
+      "Year_for_which_reduction_applies__ex_post_",
+      "Average_ex_post_emission_reduction__kt_CO2eq_y_",
+      "Explanation_of_the_basis_for_the_mitigation_estimates",
+      "Factors_affected_by_the_policy_or_measure",
+      "Reference_for_ex_post_assessment",
+      "Web_link_for_ex_post_assessment",
+      "Projected_costs__EUR_per_tonne_CO2eq_reduced__sequestered_",
+      "Projected_absolute_costs_per_year__EUR_",
+      "Year_projected_cost_has_been_calculated_for",
+      "Price_reference_year__projected_costs_",
+      "Projected_benefits__EUR_per_tonne_CO2eq_reduced__sequestered_",
+      "Projected_absolute_benefit_per_year__EUR_",
+      "Projected_net_costs__EUR_per_tonne_CO2eq_reduced__sequestered_",
+      "Projected_net_cost_per_year__EUR_",
+      "Description_of_projected_cost_estimates",
+      "Reference_for_projected_costs_and_benefits",
+      "Web_link_for_projected_costs_and_benefits",
+      "Realised_costs___EUR_per_tonne_CO2eq_reduced__sequestered_",
+      "Realised_absolute_costs_per_year__EUR_",
+      "Year_realised_cost_has_been_calculated_for",
+      "Price_reference_year__realised_costs_",
+      "Realised_benefits__EUR_per_tonne_CO2eq_reduced__sequestered_",
+      "Realised_absolute_benefit_per_year__EUR_",
+      "Realised_net_costs__EUR_per_tonne_CO2eq_reduced__sequestered_",
+      "Realised_net_cost_per_year__EUR_",
+      "Description_of_realised_cost_estimates",
+      "Reference_for_realised_costs_and_benefits",
+      "Web_link_for_realised_costs_and_benefits",
+      "Report_ID",
+      "Objective_s__lookup_only4facets",
+      "Entities_responsible_for_implementing_the_policy__type_",
+      "Union_policies_lookup_only4facets",
+      "Link_to_national_report",
+    ],
     aggs: {
-      states: { terms: { field: "states.keyword", size: 30 } },
-      world_heritage_site: {
-        terms: { field: "world_heritage_site" }
-      },
-      visitors: {
-        range: {
-          field: "visitors",
-          ranges: [
-            { from: 0.0, to: 10000.0, key: "0 - 10000" },
-            { from: 10001.0, to: 100000.0, key: "10001 - 100000" },
-            { from: 100001.0, to: 500000.0, key: "100001 - 500000" },
-            { from: 500001.0, to: 1000000.0, key: "500001 - 1000000" },
-            { from: 1000001.0, to: 5000000.0, key: "1000001 - 5000000" },
-            { from: 5000001.0, to: 10000000.0, key: "5000001 - 10000000" },
-            { from: 10000001.0, key: "10000001+" }
-          ]
-        }
-      },
-      acres: {
-        range: {
-          field: "acres",
-          ranges: [
-            { from: -1.0, key: "Any" },
-            { from: 0.0, to: 1000.0, key: "Small" },
-            { from: 1001.0, to: 100000.0, key: "Medium" },
-            { from: 100001.0, key: "Large" }
-          ]
-        }
-      }
+      Country: { terms: { field: "Country", size: 30 } },
+      GHG_s__affected: { terms: { field: "GHG_s__affected", size: 30 } },
     },
 
     // Dynamic values based on current Search UI state
