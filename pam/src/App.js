@@ -136,7 +136,7 @@ const pamFields = {
 
 export default function App() {
   const cols = Object.keys(pamFields)
-  console.log(cols)
+//  console.log(cols)
   return (
     <SearchProvider config={config}>
       <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
@@ -186,8 +186,63 @@ export default function App() {
                       isFilterable={true}
                     />
                     <Facet
+                      field="Single_policy_or_measure__or_group_of_measures"
+                      label="Single policy or measure, or group of measures"
+                      filterType="any"
+                    />
+                    <Facet
                       field="GHG_s__affected"
                       label="GHG(s) affected"
+                      filterType="any"
+                    />
+                    <Facet
+                      field="Sector_s__affected"
+                      label="Sector(s) affected"
+                      filterType="any"
+                    />
+                    <Facet
+                      field="Objective_s__lookup_only4facets"
+                      label="Objective(s)"
+                      filterType="any"
+                    />
+                    <Facet
+                      field="Type_of_policy_instrument"
+                      label="Type of policy instrument"
+                      filterType="any"
+                    />
+                    <Facet
+                      field="Status_of_implementation"
+                      label="Status of implementation"
+                      filterType="any"
+                    />
+                    <Facet
+                      field="Entities_responsible_for_implementing_the_policy__type_"
+                      label="Entities responsible for implementing the policy"
+                      filterType="any"
+                    />
+                    <Facet
+                      field="Implementation_period_start"
+                      label="Implementation period start"
+                      filterType="any"
+                    />
+                    <Facet
+                      field="Is_the_policy_or_measure_related_to_a_Union_policy_"
+                      label="Is the policy or measure related to a Union policy?"
+                      filterType="any"
+                    />
+                    <Facet
+                      field="Union_policies_lookup_only4facets"
+                      label="Union policy which resulted in the implementation of the policy or measure"
+                      filterType="any"
+                    />
+                    <Facet
+                      field="Projection_scenario_in_which_the_policy_or_measure_is_included"
+                      label="Projection scenario in which the policy or measure is included"
+                      filterType="any"
+                    />
+                    <Facet
+                      field="Policy_impacting_EU_ETS__ESD_or_LULUCF_emissions"
+                      label="Policy impacting EU ETS, ESD or LULUCF emissions"
                       filterType="any"
                     />
                   </div>

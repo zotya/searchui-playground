@@ -16,7 +16,7 @@ function buildMatch(searchTerm) {
     ? {
         multi_match: {
           query: searchTerm,
-          fields: ["Country"]
+          fields: ["all_fields_for_freetext"]
         }
       }
     : { match_all: {} };
@@ -143,7 +143,18 @@ export default function buildRequest(state) {
     ],
     aggs: {
       Country: { terms: { field: "Country", size: 30 } },
+      Single_policy_or_measure__or_group_of_measures: { terms: { field: "Single_policy_or_measure__or_group_of_measures", size: 30 } },
       GHG_s__affected: { terms: { field: "GHG_s__affected", size: 30 } },
+      Sector_s__affected: { terms: { field: "Sector_s__affected", size: 30 } },
+      Objective_s__lookup_only4facets: { terms: { field: "Objective_s__lookup_only4facets", size: 30 } },
+      Type_of_policy_instrument: { terms: { field: "Type_of_policy_instrument", size: 30 } },
+      Status_of_implementation: { terms: { field: "Status_of_implementation", size: 30 } },
+      Entities_responsible_for_implementing_the_policy__type_: { terms: { field: "Entities_responsible_for_implementing_the_policy__type_", size: 30 } },
+      Implementation_period_start: { terms: { field: "Implementation_period_start", size: 30 } },
+      Is_the_policy_or_measure_related_to_a_Union_policy_: { terms: { field: "Is_the_policy_or_measure_related_to_a_Union_policy_", size: 30 } },
+      Union_policies_lookup_only4facets: { terms: { field: "Union_policies_lookup_only4facets", size: 30 } },
+      Projection_scenario_in_which_the_policy_or_measure_is_included: { terms: { field: "Projection_scenario_in_which_the_policy_or_measure_is_included", size: 30 } },
+      Policy_impacting_EU_ETS__ESD_or_LULUCF_emissions: { terms: { field: "Policy_impacting_EU_ETS__ESD_or_LULUCF_emissions", size: 30 } }
     },
 
     // Dynamic values based on current Search UI state
